@@ -39,12 +39,14 @@ def get_text_chunks(text):
 
 
 def get_vectorstore(text_chunks):
+    #add your embedding model here -> we used instructor-large
     embeddings = HuggingFaceInstructEmbeddings(model_name="hkunlp/instructor-large")
     vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
     return vectorstore
 
 
 def get_conversation_chain(vectorstore):
+    #add your llm here -> we used google's flan-t5-xxl
     llm = HuggingFaceHub(repo_id="google/flan-t5-xxl", model_kwargs={"temperature":0.3, "max_length":1024})
 
     memory = ConversationBufferMemory(
@@ -72,7 +74,8 @@ def handle_userinput(user_question):
 def initialise():
     load_dotenv()
 
-    st.session_state.pdf_docs = get_files_from_dir('D:/College/BTECH PROJECT-1/ChatbotDTU_Final/files')
+    #Add path for your files here
+    st.session_state.pdf_docs = get_files_from_dir('files/path')
 
     # get pdf text
     st.session_state.raw_text = get_pdf_text(st.session_state.pdf_docs)
@@ -88,7 +91,7 @@ def initialise():
 
 
 def main():
-    st.set_page_config(page_title="NIET Chatbot",
+    st.set_page_config(page_title="Chatbot Template",
                        page_icon=":rocket:")
     st.write(css, unsafe_allow_html=True)
 
@@ -99,8 +102,8 @@ def main():
     if("pdf_docs" not in st.session_state):
         initialise()
 
-    st.header("NIET Chatbot (Guidance of Mr.Praveen Kumar) v1 :rocket:")
-    user_question = st.text_input("Ask a question about NIET...")
+    st.header("Chatbot Template v1 :rocket:")
+    user_question = st.text_input("Ask a question about your material..")
     if user_question:
         handle_userinput(user_question)
 

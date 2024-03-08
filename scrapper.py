@@ -2,37 +2,17 @@ from bs4 import BeautifulSoup
 from fpdf import FPDF
 import requests
 
-base = "http://www.dtu.ac.in"
+#Add the base address to your website here, from which you want to extract data
+base = "link_to_website"
+
+#Add the endpoints here
 endpoints = [
-    "/Web/About/quality.php",
-    "/Web/About/history.php", 
-    "/Web/Administrations/Chancellor.php",  
-    "/Web/Administrations/Vice-Chancellor.php", 
-    "/Web/Academics/",
-    "/Web/Academics/bacheloroftechnology.php",
-    "/Web/Academics/bacheloroftechnology-evening.php",
-    "/Web/AcademicsPG/",
-    "/Web/Departments/MCG/about/index.php",
-    "/Web/Departments/EVRT/about/index.php",
-    "/Web/Departments/AppliedChemistry/about/",
-    "/Web/Departments/AppliedPhysics/about/",
-    "/Web/Departments/BioTech/about/",
-    "/Web/Departments/Civil/about/",
-    "/Web/Departments/CSE/about/",
-    "/Web/Departments/DSM/about/",
-    "/Web/Departments/Electronics/about/",
-    "/Web/Departments/Electrical/about/",
-    "/Web/Departments/Environment/about/",
-    "/Web/Departments/Humanities/about/",
-    "/Web/Departments/InformationTechnology/about/",
-    "/Web/Departments/Mechanical/about/",
-    "/Web/Departments/design/about/index.php",
-    "/Web/Departments/eastcampus/usme/usme.php",
-    "/Web/Departments/SE/about/index.php",
-    "/Web/Departments/phyedu/about/index.php"
+    'example_enpoint1',
+    'example_endpoint2'
 ]
 
-filepath = 'D:/College/BTECH PROJECT-1/ChatbotDTU_Final/files/'
+#Add path where you want to save your file
+filepath = 'files/path'
 
 def generate_pdf_from_text(title, text):
     pdf = FPDF(format="A4")
@@ -55,6 +35,7 @@ for endpoint in endpoints :
 
     text = ""
 
+    #scrap data by analysing the html structure of your webpage
     container = soup.find_all('div', attrs={"class":"col2"})
 
     for paragraph in container:
